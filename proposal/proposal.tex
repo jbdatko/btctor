@@ -1,0 +1,140 @@
+%File: focus_paper.tex
+\documentclass[letterpaper]{article}
+
+
+% Required Packages
+\usepackage{aaai}
+\usepackage{times}
+\usepackage{helvet}
+\usepackage{courier}
+\usepackage{graphicx}
+\usepackage{mathtools}
+\usepackage{url}
+
+\newcommand{\ah}{{\sc{Anchorhead }}}
+\newcommand{\dq}{{\sc Anchorhead}$_{DQ}$ }
+
+\begin{document}
+
+%%%%%%%%%%
+% Pdfinfo for PDFTEX
+% Uncomment and complete the following for metadata if % your paper is typeset using PDFTEX
+\pdfinfo{
+/Title (Input Your Paper Title Here)
+/Author (John Doe, Jane Doe)
+/Subject (Input the Proceedings Title Here)
+/Keywords (Input your paperâ€™s keywords here)
+}
+%%%%%%%%%%
+% Section Numbers
+% Uncomment if you want to use section numbers
+% and change the 0 to a 1 or 2
+\setcounter{secnumdepth}{1}
+%%%%%%%%%%
+% Title, Author, and Address Information
+\title{Tor Incentives with Bitcoin}
+\author{Josh Datko \and Joseph Heenan\\ Drexel University\\
+CS645: Network security\\
+}
+%%%%%%%%%%
+% Body of Paper Begins \begin{document}
+\maketitle
+
+\section{Overview}\label{sec:overview}
+
+The Tor network is at serious risk of exceeding available capacity,
+both in terms of available bridge IP addresses as well as in terms of
+exit relay bandwidth[1]. We provide a brief summary of two recent
+“bandwidth-based” incentivization schemes designed to help prevent
+resource exhaustion of the Tor network: LIRA and BRAIDS. We propose an
+alternate, monetary incentivization scheme we’re calling BITTOR and
+discuss its pros and cons relative to the approaches of the LIRA and
+BRAIDS papers.
+
+This paper is unique insofar as it focuses on a scheme to increase the
+numbers of both bridges and relays, and looks at expanding on ideas
+from LIRA and BRAIDS and using them for a scheme that offers monetary,
+as opposed to bandwidth-based, incentives.
+
+\section{Introduction}\label{sec:intro}
+
+LIRA and BRAIDS focus on incentivizing relays (users operating servers
+exiting the Tor network to the Internet) via higher
+performance. BRAIDS for example “allows relays to achieve
+
+75\% lower latency than non-relays for interactive traffic, and 90\%
+higher bandwidth utilization for non-interactive traffic."[2]. We
+however have concerns that any bandwidth-based incentivization scheme
+will motivation enough users to participate in the Tor network to
+significantly reduce the effectiveness of traffic correlation
+analysis. The goal of this proposal is to outline a monetary
+incentivization scheme for Tor, based on Bitcoin, which we believe not
+only preserves existing network anonymity but offers the potential for
+significantly improved anonymity via increased recruitment of relays
+and bridges. We believe that this increased recruitment could decrease
+the  viability of traffic correlation and manipulation attacks by
+several orders of magnitude beyond the risks that exist in the current
+network (consisting of low-thousands of both bridges and relays).
+
+
+Traffic Correlation and Manipulation Attacks in Tor Today
+As noted in Feigenbaum et. al, a variety of traffic correlation and
+manipulation attacks exist again the current Tor network, for example
+an attack in which an adversary “drops packets in a denial-of-service
+(DoS) attack aimed at forcing users to move to circuits that the
+adversary can deanonymize”.[3]
+
+Challenges with Bandwidth-Based Incentivization Schemes
+They may not provide sufficient incentive for wide-scale recruiting of
+bridges and relays.
+
+Expand Proposed Research Scheme
+
+Proposal - a new version of Tor (is it possible to make backwards
+compatible?) which requires continual Bitcoin donations of clients to
+continue participating on the network. These donations are small
+enough such that they can be mined on commodity hardware/mobile
+phones; the incentive to relays is provided due to the fact that there
+are potentially hundreds of thousands of machines mining for
+Bitcoin. Users who don’t wish to mine Bitcoin can configure their
+client to use pre-purchased Bitcoin.
+
+Benefits:
+The “paying” users aren’t a subset of the network that can be easily identified.
+Potential Negative Consequences to Incentivizing BITTOR Users:
+Potential legal obligation of exit operators to maintain server logs:
+\url{http://archives.seul.org/or/talk/Dec-2008/msg00061.html}
+
+
+Reference to the phenomenon that paying some users for detracts from
+the willingness of other users to do it freely:
+http://www.mail-archive.com/tor-talk@lists.torproject.org/msg09754.html
+
+References:
+LIRA, http://www-users.cs.umn.edu/~jansen/papers/lira-ndss2013.pdf
+"LIRA provides tunable anonymity: increasing the probability that a guessed
+ticket is a winner reduces the adversary’s certainty about the
+trafﬁc source"
+
+BRAIDS, \url{http://www-users.cs.umn.edu/~hopper/braids_ccs.pdf}
+"Using a simulation of 20,300 Tor nodes, we show that BRAIDS allows relays to achieve
+75\% lower latency than non-relays for interactive traffic, and 90\%
+higher bandwidth utilization for non-interactive traffic."
+
+
+[1] \url{https://media.torproject.org/video/tor-internet-days-2010.mp4}
+[2] \url{http://www-users.cs.umn.edu/~hopper/braids_ccs.pdf}
+
+
+
+%%%%%%%%%%
+% References and End of Paper
+%\bibliography{questgen,drama_management}
+%\bibliographystyle{aaai}
+
+
+\end{document}
+%%% Local Variables
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
