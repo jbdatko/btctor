@@ -40,11 +40,20 @@ CS645: Network security\\
 % Body of Paper Begins \begin{document}
 \maketitle
 
-\section{Overview}\label{sec:overview}
+
+
+\section{Introduction}\label{sec:intro}
+
+Tor is an overlay network that uses onion routing to anonymize
+Internet Protocol (IP) communication to defend against traffic
+analysis.
+
+
+\section{Motivation}\label{sec:motivation}
 
 The Tor network is at serious risk of exceeding available capacity,
 both in terms of available bridge IP addresses as well as in terms of
-exit relay bandwidth[1]. We provide a brief summary of two recent
+exit relay bandwidth\cite{tor-internet-days}. We provide a brief summary of two recent
 “bandwidth-based” incentivization schemes designed to help prevent
 resource exhaustion of the Tor network: LIRA and BRAIDS. We propose an
 alternate, monetary incentivization scheme we’re calling BITTOR and
@@ -56,23 +65,24 @@ numbers of both bridges and relays, and looks at expanding on ideas
 from LIRA and BRAIDS and using them for a scheme that offers monetary,
 as opposed to bandwidth-based, incentives.
 
-\section{Introduction}\label{sec:intro}
-
+\section{Approach}\label{sec:approach}
+\section{Related Work}\label{sec:related}
 LIRA and BRAIDS focus on incentivizing relays (users operating servers
 exiting the Tor network to the Internet) via higher
 performance. BRAIDS for example “allows relays to achieve
 
 75\% lower latency than non-relays for interactive traffic, and 90\%
-higher bandwidth utilization for non-interactive traffic."[2]. We
-however have concerns that any bandwidth-based incentivization scheme
-will motivation enough users to participate in the Tor network to
+higher bandwidth utilization for non-interactive
+traffic\cite{Jansen:2010:RNT:1866307.1866344}". We however have
+concerns that any bandwidth-based incentivization scheme will
+motivation enough users to participate in the Tor network to
 significantly reduce the effectiveness of traffic correlation
 analysis. The goal of this proposal is to outline a monetary
 incentivization scheme for Tor, based on Bitcoin, which we believe not
 only preserves existing network anonymity but offers the potential for
 significantly improved anonymity via increased recruitment of relays
 and bridges. We believe that this increased recruitment could decrease
-the  viability of traffic correlation and manipulation attacks by
+the viability of traffic correlation and manipulation attacks by
 several orders of magnitude beyond the risks that exist in the current
 network (consisting of low-thousands of both bridges and relays).
 
@@ -87,6 +97,7 @@ adversary can deanonymize”.[3]
 Challenges with Bandwidth-Based Incentivization Schemes
 They may not provide sufficient incentive for wide-scale recruiting of
 bridges and relays.
+\subsection{Novelty}\label{sec:novelty}
 
 Expand Proposed Research Scheme
 
@@ -105,32 +116,24 @@ Potential Negative Consequences to Incentivizing BITTOR Users:
 Potential legal obligation of exit operators to maintain server logs:
 \url{http://archives.seul.org/or/talk/Dec-2008/msg00061.html}
 
+\section{Evaluation}\label{sec:evaluation}
+\section{Milestones}\label{sec:milestones}
+
+
+
+
+
 
 Reference to the phenomenon that paying some users for detracts from
 the willingness of other users to do it freely:
 http://www.mail-archive.com/tor-talk@lists.torproject.org/msg09754.html
 
-References:
-LIRA, http://www-users.cs.umn.edu/~jansen/papers/lira-ndss2013.pdf
-"LIRA provides tunable anonymity: increasing the probability that a guessed
-ticket is a winner reduces the adversary’s certainty about the
-trafﬁc source"
-
-BRAIDS, \url{http://www-users.cs.umn.edu/~hopper/braids_ccs.pdf}
-"Using a simulation of 20,300 Tor nodes, we show that BRAIDS allows relays to achieve
-75\% lower latency than non-relays for interactive traffic, and 90\%
-higher bandwidth utilization for non-interactive traffic."
-
-
-[1] \url{https://media.torproject.org/video/tor-internet-days-2010.mp4}
-[2] \url{http://www-users.cs.umn.edu/~hopper/braids_ccs.pdf}
-
 
 
 %%%%%%%%%%
 % References and End of Paper
-%\bibliography{questgen,drama_management}
-%\bibliographystyle{aaai}
+\bibliography{bitcoin,tor}
+\bibliographystyle{aaai}
 
 
 \end{document}
