@@ -15,12 +15,13 @@
 
 %%%%%%%%%%
 % Pdfinfo for PDFTEX
-% Uncomment and complete the following for metadata if % your paper is typeset using PDFTEX
+% Uncomment and complete the following for metadata if % your paper is
+% typeset using PDFTEX
 \pdfinfo{
-/Title (Input Your Paper Title Here)
-/Author (John Doe, Jane Doe)
-/Subject (Input the Proceedings Title Here)
-/Keywords (Input your paperâ€™s keywords here)
+/Title (Tor Incentives with Bitcoin)
+/Author (Josh Datko, Joseph Heenan)
+/Subject (Tor Incentives with Bitcoin)
+/Keywords (tor bitcoin)
 }
 %%%%%%%%%%
 % Section Numbers
@@ -37,30 +38,87 @@ CS645: Network security\\
 % Body of Paper Begins \begin{document}
 \maketitle
 
-
-
-\section{Introduction}\label{sec:intro}
-
+\section{Motivation}\label{sec:motivation}
 Tor is an overlay network that uses onion routing to anonymize
 Internet Protocol (IP) communication to defend against traffic
-analysis.
+analysis.  There are several categories of users that benefit from
+this service.  Tor protects normal users from collections attempts for
+advertisements or market research and also prevents their Internet
+service provider from being aware of their browsing history.  However,
+governments also use Tor for intelligence gathering or to mask their
+IP address while conducting sting operations.  Also, Tor is used by
+users as a circumvention tool\cite{tor-internet-days}.  In countries
+like China with a strong state-sponsored censorship to
+activists\cite{china-censorship}, Tor provides a means to allow access
+to the unfiltered Internet.
 
-
-\section{Motivation}\label{sec:motivation}
-
-The Tor network is at serious risk of exceeding available capacity,
+However, the Tor network is at serious risk of exceeding available capacity,
 both in terms of available bridge IP addresses as well as in terms of
-exit relay bandwidth\cite{tor-internet-days}.
+exit relay bandwidth\cite{tor-internet-days}.  The Tor network is
+mainly supported by volunteers and previous efforts to increase the
+number of relays have been through public
+campaigns\cite{eff-campaign} with some success.  However, Tor still
+suffers from a "tragedy of the commons\cite{Hardin_1968_Commons}"
+since there are not many incentives to run a relay besides altruism.
+Even though users receive better anonymity against some attacks while
+running a relay\cite{better-anon-tor-relay}, Tor is still in demand of
+more relay operators.
+
+Finding the correct incentive for Tor relays without reducing the
+anonymity in Tor is challenging.  As we show in Section
+\ref{sec:related}, there are several proposed methods however all are
+focused on improving the Quality of Service (QoS) for relay
+operators.  These methods require subtle modifications to the Tor
+network to compensate for the adjusted QoS.  We propose a system to
+simply increase the number of relay operators by incentive them
+with monetary payments with Bitcoin.
+
+Bitcoin is a peer-to-peer electronic cash currency that uses a
+proof-of-work based model\cite{nakamoto2009bitcoin}.  It has seen
+increasing popularity since it's release in 2009 and there exists
+several exchanges to convert Bitcoin in various national currencies.
+New Bitcoins enter the market by "mining."  However, as there are
+fixed number of Bitcoins, successive Bitcoins become harder (take more
+computational resources) to mine.  To account for the increased
+difficulty, computers join a mining
+pool\cite{DBLP:journals/corr/abs-1112-4980} to contribute to larger
+computation resource, however the reward is now shared amount all miners.
+
 
 \section{Approach}\label{sec:approach}
 
 The goal of this research is to assess the feasibility of a Bitcoin
 Tor incentive system.  First, we intend to identify the problems and
-challenges with such a design. We will consider two Bitcoin payments
+challenges with such a design.  In addition to the anonymity analysis,
+we indent to comment on other issues like possible data retention
+problems introduced through payments\cite{data-retention}.
+Unfortunately, through monetary incentives we may actually reduce the
+number of relays since volunteers may be demotivated to provide the
+service for free\cite{RePEc:eee:joepsy:v:30:y:2009:i:3:p:500-508} and
+we plan to provide on discussion on this issue as well.
+
+
+We will consider two Bitcoin payments
 methods.  One using Zerocoin\cite{Miers:2013:ZAD:2497621.2498124}, an
 anonymous Bitcoin approach.  The other will outline an approach with
 the pseudo-anonymous Bitcoin and evaluate if it hinders the anonymity
-of Tor.
+of Tor.  Bitcoin is not anonymous\cite{journals/iacr/AndroulakiKRSC12}
+and can not be combined with Tor to expose Tor users.
+
+A potential approach is to have the Tor client also join a
+decentralized, peer-to-peer mining pool such as P2Pool.  Ideally, as a
+results of the client's work, the mining pool would pay the bridge or
+relay directly without exposing the client.  A more complicate
+scenario is when a client has Bitcoin and wants to spend it without
+mining.  A priority for the research is to outline a system for this
+use-case without compromising anonymity.
+
+As a result of payment scheme investigation, we intend analyze the
+trade-offs of required Bitcoin servers or ones that optionally accept
+payments.  Servers that require payment may help categorize Tor users
+(and thus degrade anonymity).  Perhaps a payment system that is
+randomized can improve anonymity will still offering a certain
+expected value of benefit.
 
 Then we will compare our incentive system with other systems such as
 BRAIDS\cite{Jansen:2010:RNT:1866307.1866344},
@@ -68,87 +126,61 @@ PAR\cite{raykova-pet2008}, and LIRA\cite{lira-ndss13}.  Following a
 comparison, we will provide our solutions to the identified problems
 and analyze the impact on anonymity.  The anonymity goal is to not
 degrade the protection provided by Tor by introducing the Bitcoin
-incentive.  Lastly, we will prototype the system and analyze the
-results.  Incentives have been shown to increase Tor performance
+incentive.
+
+Lastly, we will prototype the system and analyze the results.  The
+system will required a modified Tor client that potentially includes
+Bitcoin mining pool software and a modified relay that accepts the
+Bitcoins.  Incentives have been shown to increase Tor performance
 \cite{"Johnny"Ngan:2010:BIT:2163571.2163590}, so we intend to focus on
 the performance of our Bitcoin payment protocol in Tor.
 
 
 \section{Related Work}\label{sec:related}
-LIRA and BRAIDS focus on incentivizing relays (users operating servers
-exiting the Tor network to the Internet) via higher
-performance. BRAIDS for example “allows relays to achieve
+Tor projects leaders have identified the need for additional relays
+and have suggested that incentives should be
+considered\cite{"Johnny"Ngan:2010:BIT:2163571.2163590}.  In that same
+paper they also present the ``Gold Star'' incentive system, which
+unfortunately creates a noticeable subset of prioritized Tor users.  A
+payment incentive system was suggested by PAR\cite{raykova-pet2008},
+however it relied on centralized bank which compromises anonymity.  A
+QoS incentive scheme, BRAIDS, was proposed that claimed it “allows
+relays to achieve 75\% lower latency than non-relays for interactive
+traffic, and 90\% higher bandwidth utilization for non-interactive
+traffic\cite{Jansen:2010:RNT:1866307.1866344}".  A related QoS
+incentive system was introduced with LIRA that was based on a
+cryptographic lottery\cite{lira-ndss13}.
 
-75\% lower latency than non-relays for interactive traffic, and 90\%
-higher bandwidth utilization for non-interactive
-traffic\cite{Jansen:2010:RNT:1866307.1866344}". We however have
-concerns that any bandwidth-based incentivization scheme will
-motivation enough users to participate in the Tor network to
-significantly reduce the effectiveness of traffic correlation
-analysis. The goal of this proposal is to outline a monetary
-incentivization scheme for Tor, based on Bitcoin, which we believe not
-only preserves existing network anonymity but offers the potential for
-significantly improved anonymity via increased recruitment of relays
-and bridges. We believe that this increased recruitment could decrease
-the viability of traffic correlation and manipulation attacks by
-several orders of magnitude beyond the risks that exist in the current
-network (consisting of low-thousands of both bridges and relays).
+Bitcoin privacy has been evaluated and it has been shown that
+approximately 40\% of users can be
+de-anonymized\cite{journals/iacr/AndroulakiKRSC12}.  Using networking
+flow analysis combined with the inherent public transaction ledger, it
+is also possible to identify Bitcoin users\cite{journals/corr/abs-1107-4524}.
 
 
-Traffic Correlation and Manipulation Attacks in Tor Today
-As noted in Feigenbaum et. al, a variety of traffic correlation and
-manipulation attacks exist again the current Tor network, for example
-an attack in which an adversary “drops packets in a denial-of-service
-(DoS) attack aimed at forcing users to move to circuits that the
-adversary can deanonymize”.[3]
-
-Challenges with Bandwidth-Based Incentivization Schemes
-They may not provide sufficient incentive for wide-scale recruiting of
-bridges and relays.
 \subsection{Novelty}\label{sec:novelty}
+This is the first research to consider Bitcoin as the incentive
+mechanism for Tor.  Unlike LIRA and BRAIDS, it does not intended to
+redefine the QoS and unlike PAR, it does not use a centralized bank.
 
-We provide a brief summary of two recent
-“bandwidth-based” incentivization schemes designed to help prevent
-resource exhaustion of the Tor network: LIRA and BRAIDS. We propose an
-alternate, monetary incentivization scheme we’re calling BITTOR and
-discuss its pros and cons relative to the approaches of the LIRA and
-BRAIDS papers.
+We believe that a monetary incentive will increase relay and bridge
+participation more so than QoS based incentives.  While increased QoS
+is attractive for certain users, we feel that monetary incentives
+have wider appeal and will scale with increased usage in Tor.
 
-This paper is unique insofar as it focuses on a scheme to increase the
-numbers of both bridges and relays, and looks at expanding on ideas
-from LIRA and BRAIDS and using them for a scheme that offers monetary,
-as opposed to bandwidth-based, incentives.
+If feasible, the mining pool payment to a node that did not perform
+the proof-of-work is novel.  Normally, the Bitcoin miner desires
+payment for its efforts in computation, but we are not aware of a
+charity-like payment mechanism in Bitcoin.
 
-Expand Proposed Research Scheme
 
-Proposal - a new version of Tor (is it possible to make backwards
-compatible?) which requires continual Bitcoin donations of clients to
-continue participating on the network. These donations are small
-enough such that they can be mined on commodity hardware/mobile
-phones; the incentive to relays is provided due to the fact that there
-are potentially hundreds of thousands of machines mining for
-Bitcoin. Users who don’t wish to mine Bitcoin can configure their
-client to use pre-purchased Bitcoin.
 
-Benefits:
-The “paying” users aren’t a subset of the network that can be easily identified.
-Potential Negative Consequences to Incentivizing BITTOR Users:
-Potential legal obligation of exit operators to maintain server logs:
-\url{http://archives.seul.org/or/talk/Dec-2008/msg00061.html}
 
 \section{Evaluation}\label{sec:evaluation}
 A security analysis focusing on anonymity will be provided for each
 Bitcoin incentive system.
 \section{Milestones}\label{sec:milestones}
 
-
-
-
-
-
-Reference to the phenomenon that paying some users for detracts from
-the willingness of other users to do it freely:
-http://www.mail-archive.com/tor-talk@lists.torproject.org/msg09754.html
 
 
 
