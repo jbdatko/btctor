@@ -18,7 +18,7 @@
 % Uncomment and complete the following for metadata if % your paper is
 % typeset using PDFTEX
 \pdfinfo{
-/Title (Tor Incentives with Bitcoin)
+/Title (BitTor: Bitcoin incentivized Tor)
 /Author (Josh Datko, Joseph Heenan)
 /Subject (Tor Incentives with Bitcoin)
 /Keywords (tor bitcoin)
@@ -38,25 +38,25 @@ CS645: Network security\\
 % Body of Paper Begins \begin{document}
 \maketitle
 
-\section{Motivation}\label{sec:motivation}
+\section*{Motivation}\label{sec:motivation}
 Tor is an overlay network that uses onion routing to anonymize
 Internet Protocol (IP) communication to defend against traffic
 analysis.  There are several categories of users that benefit from
 this service.  Tor protects normal users from collections attempts for
 advertisements or market research and also prevents their Internet
-service provider from being aware of their browsing history.  However,
-governments also use Tor for intelligence gathering or to mask their
-IP address while conducting sting operations.  Also, Tor is used by
-users as a circumvention tool\cite{tor-internet-days}.  In countries
-like China with a strong state-sponsored censorship to
-activists\cite{china-censorship}, Tor provides a means to allow access
-to the unfiltered Internet.
+service providers from being aware of their browsing history.
+Governments also use Tor for intelligence gathering and to mask their
+IP address while conducting sting operations.  Also, Tor is used as a
+circumvention tool\cite{tor-internet-days}.  In countries like China
+with strong, state-sponsored censorship\cite{china-censorship}, Tor
+provides a means to allow access to the unfiltered Internet.
 
-However, the Tor network is at serious risk of exceeding available capacity,
-both in terms of available bridge IP addresses as well as in terms of
-exit relay bandwidth\cite{tor-internet-days}.  The Tor network is
-mainly supported by volunteers and previous efforts to increase the
-number of relays have been through public
+The Tor network is mainly supported by volunteers who donate
+computational resources and Internet bandwidth.  Unfortunately, the
+Tor network is at risk of exceeding available capacity, both in terms
+of available bridges (unlisted relays) as well as in terms of exit
+relay bandwidth\cite{tor-internet-days}.  Previous efforts to increase
+the number of relays have including public awareness
 campaigns\cite{eff-campaign} with some success.  However, Tor still
 suffers from a "tragedy of the commons\cite{Hardin_1968_Commons}"
 since there are not many incentives to run a relay besides altruism.
@@ -65,37 +65,38 @@ running a relay\cite{better-anon-tor-relay}, Tor is still in demand of
 more relay operators.
 
 Finding the correct incentive for Tor relays without reducing the
-anonymity in Tor is challenging.  As we show in Section
-\ref{sec:related}, there are several proposed methods however all are
-focused on improving the Quality of Service (QoS) for relay
-operators.  These methods require subtle modifications to the Tor
-network to compensate for the adjusted QoS.  We propose a system to
-simply increase the number of relay operators by incentive them
-with monetary payments with Bitcoin.
+anonymity in Tor is challenging.  There are several proposed incentive
+methods however most are focused on improving the Quality of Service
+(QoS) for relay operators.  These methods require subtle modifications
+to the Tor network to compensate for the adjusted QoS.  We propose a
+system to simply increase the number of relay operators by providing
+an incentive with monetary payments from Bitcoin.
 
 Bitcoin is a peer-to-peer electronic cash currency that uses a
 proof-of-work based model\cite{nakamoto2009bitcoin}.  It has seen
-increasing popularity since it's release in 2009 and there exists
+increasing popularity since its release in 2009 and there exists
 several exchanges to convert Bitcoin in various national currencies.
-New Bitcoins enter the market by "mining."  However, as there are
+New Bitcoins enter the market by "mining."  However, as there are a
 fixed number of Bitcoins, successive Bitcoins become harder (take more
 computational resources) to mine.  To account for the increased
 difficulty, computers join a mining
 pool\cite{DBLP:journals/corr/abs-1112-4980} to contribute to larger
-computation resource, however the reward is now shared amount all miners.
+computation resource, however the reward is now shared amount all
+miners.
 
 
-\section{Approach}\label{sec:approach}
+\section*{Approach}\label{sec:approach}
 
 The goal of this research is to assess the feasibility of a Bitcoin
-Tor incentive system.  First, we intend to identify the problems and
-challenges with such a design.  In addition to the anonymity analysis,
-we indent to comment on other issues like possible data retention
-problems introduced through payments\cite{data-retention}.
-Unfortunately, through monetary incentives we may actually reduce the
-number of relays since volunteers may be demotivated to provide the
-service for free\cite{RePEc:eee:joepsy:v:30:y:2009:i:3:p:500-508} and
-we plan to provide on discussion on this issue as well.
+Tor incentive system, which we are calling BitTor.  First, we intend
+to identify the problems and challenges with such a design.  In
+addition to the anonymity analysis, we indent to comment on other
+issues like possible data retention problems introduced through
+payments\cite{data-retention}.  Unfortunately, monetary incentives may
+actually reduce the number of relays since volunteers may be
+demotivated to provide the service for
+free\cite{RePEc:eee:joepsy:v:30:y:2009:i:3:p:500-508} and we plan to
+provide on discussion on this issue as well.
 
 
 We will consider two Bitcoin payments
@@ -103,15 +104,19 @@ methods.  One using Zerocoin\cite{Miers:2013:ZAD:2497621.2498124}, an
 anonymous Bitcoin approach.  The other will outline an approach with
 the pseudo-anonymous Bitcoin and evaluate if it hinders the anonymity
 of Tor.  Bitcoin is not anonymous\cite{journals/iacr/AndroulakiKRSC12}
-and can not be combined with Tor to expose Tor users.
+and should not be combined with Tor in a manner that exposes Tor users.
 
-A potential approach is to have the Tor client also join a
-decentralized, peer-to-peer mining pool such as P2Pool.  Ideally, as a
-results of the client's work, the mining pool would pay the bridge or
-relay directly without exposing the client.  A more complicate
-scenario is when a client has Bitcoin and wants to spend it without
-mining.  A priority for the research is to outline a system for this
-use-case without compromising anonymity.
+A potential approach for Bitcoin payment is to have the Tor client
+also join a decentralized, peer-to-peer mining pool such as P2Pool.
+Ideally, as a results of the client's work, the mining pool would pay
+the bridge or relay directly without exposing the client.  We call
+this type of payment a ``charity payment'' since a Bitcoin account (in
+this case the Tor Server) receives payment without performing the
+mining.  A more complicate scenario is when a client has Bitcoin and
+wants to spend it without mining, since it is not obvious how to pay
+the Tor server which revealing the Tor user.  A priority for the
+research is to outline a system for this use-case without compromising
+anonymity.
 
 As a result of payment scheme investigation, we intend analyze the
 trade-offs of required Bitcoin servers or ones that optionally accept
@@ -133,10 +138,12 @@ system will required a modified Tor client that potentially includes
 Bitcoin mining pool software and a modified relay that accepts the
 Bitcoins.  Incentives have been shown to increase Tor performance
 \cite{"Johnny"Ngan:2010:BIT:2163571.2163590}, so we intend to focus on
-the performance of our Bitcoin payment protocol in Tor.
+the performance of our Bitcoin payment protocol in Tor.  As
+manipulative experiments should not be run on the live Tor network, a
+standalone network will be used.
 
 
-\section{Related Work}\label{sec:related}
+\section*{Related Work}\label{sec:related}
 Tor projects leaders have identified the need for additional relays
 and have suggested that incentives should be
 considered\cite{"Johnny"Ngan:2010:BIT:2163571.2163590}.  In that same
@@ -174,12 +181,55 @@ payment for its efforts in computation, but we are not aware of a
 charity-like payment mechanism in Bitcoin.
 
 
+\section*{Evaluation}\label{sec:evaluation}
+
+The goal of research is propose a Bitcoin incentivized Tor system and
+since we are introducing a new aspect into Tor, it is expected that we
+provide a thorough security analysis of the change in anonymity.
+While we believe that Bitcoin can provide an incentive to running
+relays, it may turn out that the pseudo-anonymity in Bitcoin is too
+degrading for use in Tor.  In that case, we think the study of its
+faults is still useful as no such research currently exists.
+
+As this research involves two live systems, Bitcoin which directly
+involves finicial transactions and Tor which at minimum, contains data
+that users consider private, care must be taken when prototyping.
+Demonstrating that a Bitcoin miner can pay another party via a charity
+payment is sufficient to demonstrate the Tor use case.  A Tor circuit,
+preferably on an isolated network can then be modified to show the
+proof of concept for the BitTor prototype.
 
 
-\section{Evaluation}\label{sec:evaluation}
-A security analysis focusing on anonymity will be provided for each
-Bitcoin incentive system.
-\section{Milestones}\label{sec:milestones}
+\section*{Milestones}\label{sec:milestones}
+
+Table \ref{tab:milestones} contains a proposed timeline for completing
+this project.  This work project could be easily split among two
+people where one person focuses on the Bitcoin mining and the other
+the modifications into Tor.  The greatest risk to this feasability
+investigation is Bitcoin charity mining.  Given that Bitcoin is
+subject to traffic analysis, lacking a direct mining-pool-to-relay
+system, it is significantly harder to preserve anonymity.
+
+
+\begin{table}
+  \centering
+  \begin{tabular}{l | c}
+    Milestone & Week Number\\
+    \hline
+
+    Identify Bitcoin Payment Method & 2\\
+    Investigate charity Bitcoin mining & 3\\
+    Compare method to other incentive methods & 4 \\
+    Conduct Anonymity analysis & 5 \\
+    Implement Bitcoin charity miner & 7 \\
+    Implement Tor Bitcoin extensions & 8 \\
+    Implement Prototype & 9 \\
+    Analyze Results & 10
+
+  \end{tabular}
+  \caption{Project Milestones}
+  \label{tab:milestones}
+\end{table}
 
 
 
